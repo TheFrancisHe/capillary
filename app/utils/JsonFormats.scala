@@ -18,9 +18,9 @@ object JsonFormats {
 
     def reads(json: JsValue): JsResult[Delta] = JsSuccess(Delta(
       partition   = (json \ "partition").as[Int],
-      amount      = (json \ "amount").as[Option[Long]],
+      amount      = (json \ "amount").toOption.map(_.as[Long]),
       current     = (json \ "current").as[Long],
-      storm       = (json \ "storm").as[Option[Long]]
+      storm       = (json \ "storm").toOption.map(_.as[Long])
     ))
 
     def writes(o: Delta): JsValue = {
